@@ -147,7 +147,7 @@ $(doubleDownButton).click(doubleDown);
 $(hitButton).click(hit);
 $(standButton).click(stand);
 $(playAgainButton).click(newGame);
-//$("#reset-game").click(resetGame);
+$("#reset-game").click(resetGame);
 
 $(".reduce-aces-button").click(   // Can only see this if player draws 2 aces, would only be reducing in 1st deck
 	function(){
