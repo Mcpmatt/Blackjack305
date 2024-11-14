@@ -65,7 +65,7 @@ function enableButton(buttonName, event) {
 function updateVisibleChipBalances() {
 	$(".current-wager").text(currentWager);
 	$(".current-chip-balance").text(currentChipBalance);
-	localStorage.setItem('blackjackChips', currentChipBalance);
+	//localStorage.setItem('blackjackChips', currentChipBalance);
 }
 
 // Update card hand totals displayed to user throughout the game
