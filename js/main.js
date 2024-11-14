@@ -4,12 +4,15 @@ var cardsInDeck;
 $( document ).ready(function() {
   getCards();
   cardsInDeck = cards;
+  //	Get initial tokens from URL parameter instead of LocalStorage
+  const urlParams = new URLSearchParams(window.location.search);
+  currentChipBalance = parseInt(urlParams.get('tokens')) || 0;
   updateVisibleChipBalances();
 });
 
 var currentTurn = "player";
 var currentWager = 0;
-var currentChipBalance = localStorage.getItem('blackjackChips') || 500;
+//var currentChipBalance = localStorage.getItem('blackjackChips') || 500;
 var gameWinner = "none"; // To be declared at end of game
 var isGameOver = false;
 
