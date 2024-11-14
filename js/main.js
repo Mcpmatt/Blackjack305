@@ -6,7 +6,7 @@ $( document ).ready(function() {
   cardsInDeck = cards;
   //	Get initial tokens from URL parameter instead of LocalStorage
   const urlParams = new URLSearchParams(window.location.search);
-  currentChipBalance = parseInt(urlParams.get('tokens')) || 0;
+  currentChipBalance = parseInt(urlParams.get('tokens'));
   updateVisibleChipBalances();
 });
 
