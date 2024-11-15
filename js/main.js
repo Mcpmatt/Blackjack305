@@ -6,10 +6,10 @@ $( document ).ready(function() {
   cardsInDeck = cards;
   //	Get initial tokens from URL parameter instead of LocalStorage
   const urlParams = new URLSearchParams(window.location.search);
-  var currentChipBalance = parseInt(urlParams.get('tokens')) || 500;
+  
   updateVisibleChipBalances();
 });
-
+var currentChipBalance = parseInt(urlParams.get('tokens')) || 500;
 var currentTurn = "player";
 var currentWager = 0;
 //var currentChipBalance = localStorage.getItem('blackjackChips') || 500;
