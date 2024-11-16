@@ -8,16 +8,16 @@ $( document ).ready(function() {
   const urlParams = new URLSearchParams(window.location.search);
   currentChipBalance = parseInt(urlParams.get('tokens')) || 500;
   updateVisibleChipBalances();
-  //	Initialize cash out button if params exist
-  if (urlParams.get('cloudFunction') && urlParams.get('uid')) {
-        enableButton(cashOutButton, () => {
-            if (confirm(`Cash out ${currentChipBalance} tokens?`)) {
-                cashOut();
-            }
+  // Initialize cash out button if at welcome/game over screen and params exist
+  if (urlParams.get('cloudFunction') && urlParams.get('uid') && 
+	($("#welcome").is(":visible") || $("#game-over").is(":visible"))) {
+  	enableButton(cashOutButton, () => {
+  		if (confirm(`Cash out ${currentChipBalance} tokens?`)) {
+			cashOut();
+            	}
         });
     } else {
         disableButton(cashOutButton);
-        console.warn('Cash out disabled: Missing required parameters');
     }
 });
 
