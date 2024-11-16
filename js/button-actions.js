@@ -89,6 +89,57 @@ var split = function() {
 
 }
 
+var cashOut = function() {
+    // Get the cloud function URL and user ID from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const cloudFunctionUrl = urlParams.get('cloudFunction');
+    const userId = urlParams.get('uid');
+    const finalBalance = currentChipBalance;
+    
+    // Disable button during processing to prevent double-clicks
+    disableButton(cashOutButton);
+    
+    // Show loading indicator using Materialize toast
+    Materialize.toast('Processing cash out...', 2000);
+    
+    fetch(cloudFunctionUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            uid: userId,
+            finalBalance: finalBalance
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            // Show success message
+            Materialize.toast('Successfully cashed out!', 1500);
+            
+            // Add slight delay for toast to be visible before redirect
+            setTimeout(function() {
+                // Return to FlutterFlow app
+                window.location.href = 'stepbet://cash-out-complete';
+            }, 1500);
+        } else {
+            throw new Error('Cash out failed');
+        }
+    })
+    .catch(error => {
+        console.error('Cash out error:', error);
+        Materialize.toast('Error processing cash out. Please try again.', 3000);
+        // Re-enable button on error
+        enableButton(cashOutButton, cashOut);
+    });
+};
+
 function doubleDown() {
 	if (currentChipBalance - currentWager <= 0) {
 		Materialize.toast("Insufficient chip balance" , 1000);
