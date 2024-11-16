@@ -2,7 +2,7 @@
 
 ALL CREDIT GOES TO : **https://github.com/jacquelynmarcella**
 
-https://jacquelynmarcella.github.io/blackjack/
+[Play Blacjack Game](https://mcpmatt.github.io/Blackjack305/#)
 
 A JavaScript based Blackjack game. Beat the dealer by getting as close to 21 without going over.
 
