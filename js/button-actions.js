@@ -135,7 +135,7 @@ function newGame() {
 }
 
 function resetGame() {
-	currentChipBalance = currentChipBalance + CurrentWager;
+	currentChipBalance = currentChipBalance + currentWager;
 	currentWager = 0;
 	updateVisibleChipBalances();
 	location.reload();
