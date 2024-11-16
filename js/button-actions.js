@@ -1,6 +1,9 @@
 // This file contains key interactions that will occur after the player has clicked a button
 
 var startGame = function() {
+	// Disable cash out button during gameplay
+    	disableButton(cashOutButton);
+	
 	getCards();
 	if (currentWager === 0) {
 		Materialize.toast("You must select a bet to play", 1000);
