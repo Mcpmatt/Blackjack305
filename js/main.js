@@ -8,6 +8,17 @@ $( document ).ready(function() {
   const urlParams = new URLSearchParams(window.location.search);
   currentChipBalance = parseInt(urlParams.get('tokens')) || 500;
   updateVisibleChipBalances();
+  //	Initialize cash out button if params exist
+  if (urlParams.get('cloudFunction') && urlParams.get('uid')) {
+        enableButton(cashOutButton, () => {
+            if (confirm(`Cash out ${currentChipBalance} tokens?`)) {
+                cashOut();
+            }
+        });
+    } else {
+        disableButton(cashOutButton);
+        console.warn('Cash out disabled: Missing required parameters');
+    }
 });
 
 var currentTurn = "player";
@@ -48,6 +59,8 @@ var hitButton = $("#hit-button");
 var standButton = $("#stand-button");
 var splitButton = $(".split-button");
 var playAgainButton = $(".new-game-button"); 
+// CashOut Button Declaration
+var cashOutButton = $("#cash-out-button");
 
 // Deactivates a button (both event listener and appearance)
 function disableButton(buttonName) {
@@ -149,6 +162,7 @@ $(hitButton).click(hit);
 $(standButton).click(stand);
 $(playAgainButton).click(newGame);
 $("#reset-game").click(resetGame);
+//  We don't need $(cashOutButton).click(cashOut); because enableButton already handles this
 
 $(".reduce-aces-button").click(   // Can only see this if player draws 2 aces, would only be reducing in 1st deck
 	function(){
