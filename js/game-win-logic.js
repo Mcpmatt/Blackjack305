@@ -72,6 +72,16 @@ function announceWinner() {
 	$(startButton).hide(); 
 	$("#game-over").show("drop", 500);
 
+	// Enable cash out button if we have required parameters
+	const urlParams = new URLSearchParams(window.location.search);
+	if (urlParams.get('cloudFunction') && urlParams.get('uid')) {
+		enableButton(cashOutButton, () => {
+	        	if (confirm(`Cash out ${currentChipBalance} tokens?`)) {
+	                	cashOut();
+	            	}
+	        });
+	}
+	
 	if (gameWinner === "player") {
 		$("#game-outcome").text("You won");
 	} else if (gameWinner === "dealer") {
