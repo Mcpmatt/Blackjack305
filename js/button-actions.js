@@ -130,6 +130,7 @@ var cashOut = function() {
     })
     .catch(error => {
         Materialize.toast(`Request failed: ${error.message}`, 3000);
+	enableButton(cashOutButton, cashOut);
     });
 };
 
