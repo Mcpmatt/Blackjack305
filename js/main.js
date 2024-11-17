@@ -39,7 +39,7 @@ $( document ).ready(function() {
     
   // Verify user ID
   if (params.uid) {
-        Materialize.toast('User ID is present:'), 3000;
+        Materialize.toast('User ID is present:', 3000);
 	Materialize.toast(params.uid);
     } else {
         Materialize.toast('User ID is missing');
