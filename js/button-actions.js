@@ -102,27 +102,26 @@ var cashOut = function() {
     // Disable button during processing to prevent double-clicks
     disableButton(cashOutButton);
     
-    // Show what we're about to send
     Materialize.toast('Attempting cash out...', 2000);
     Materialize.toast(`Amount: ${finalBalance} tokens`, 2000);
 
-    const requestData = {
-        uid: userId,
-        finalBalance: finalBalance
-    };
-
     fetch(cloudFunctionUrl, {
         method: 'POST',
+        mode: 'cors', // Explicitly set CORS mode
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
         },
-        body: JSON.stringify(requestData)
+        body: JSON.stringify({
+            uid: userId,
+            finalBalance: finalBalance
+        })
     })
     .then(response => {
         if (!response.ok) {
             return response.text().then(text => {
-                Materialize.toast(`Server response: ${text}`, 3000);
-                throw new Error('Server error');
+                Materialize.toast(`Server error: ${text}`, 3000);
+                throw new Error(text);
             });
         }
         return response.json();
@@ -133,8 +132,6 @@ var cashOut = function() {
             setTimeout(() => {
                 window.location.href = 'stepbet://cash-out-complete';
             }, 2000);
-        } else {
-            throw new Error(data.error || 'Cash out failed');
         }
     })
     .catch(error => {
