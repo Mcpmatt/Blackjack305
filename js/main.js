@@ -31,15 +31,16 @@ $( document ).ready(function() {
     
   // Verify cloud function URL format
   if (params.cloudFunction) {
-        Materialize.toast('Cloud Function URL is properly formatted:', 
-            params.cloudFunction.startsWith('https://us-central1-'));
+        Materialize.toast('Cloud Function URL is properly formatted:');
+	Materialize.toast(params.cloudFunction);
     } else {
         Materialize.toast('Cloud Function URL is missing');
     }
     
   // Verify user ID
   if (params.uid) {
-        Materialize.toast('User ID is present:', params.uid);
+        Materialize.toast('User ID is present:');
+	Materialize.toast(params.uid);
     } else {
         Materialize.toast('User ID is missing');
     }
