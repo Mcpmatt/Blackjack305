@@ -31,7 +31,7 @@ $( document ).ready(function() {
     
   // Verify cloud function URL format
   if (params.cloudFunction) {
-        Materialize.toast('Cloud Function URL is properly formatted:');
+        Materialize.toast('Cloud Function URL is properly formatted:', 3000);
 	Materialize.toast(params.cloudFunction);
     } else {
         Materialize.toast('Cloud Function URL is missing');
@@ -39,7 +39,7 @@ $( document ).ready(function() {
     
   // Verify user ID
   if (params.uid) {
-        Materialize.toast('User ID is present:');
+        Materialize.toast('User ID is present:'), 3000;
 	Materialize.toast(params.uid);
     } else {
         Materialize.toast('User ID is missing');
