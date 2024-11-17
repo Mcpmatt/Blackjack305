@@ -102,34 +102,43 @@ var cashOut = function() {
     // Disable button during processing to prevent double-clicks
     disableButton(cashOutButton);
     
-    Materialize.toast('Sending request...', 2000);
+    // Show what we're about to send
+    Materialize.toast('Attempting cash out...', 2000);
+    Materialize.toast(`Amount: ${finalBalance} tokens`, 2000);
 
-    // Basic fetch request
+    const requestData = {
+        uid: userId,
+        finalBalance: finalBalance
+    };
+
     fetch(cloudFunctionUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            uid: userId,
-            finalBalance: finalBalance
-        })
+        body: JSON.stringify(requestData)
     })
     .then(response => {
-        Materialize.toast(`Got response: ${response.status}`, 2000);
+        if (!response.ok) {
+            return response.text().then(text => {
+                Materialize.toast(`Server response: ${text}`, 3000);
+                throw new Error('Server error');
+            });
+        }
         return response.json();
     })
     .then(data => {
-        Materialize.toast('Processing response...', 2000);
         if (data.success) {
-            Materialize.toast('Success! Returning to app...', 2000);
+            Materialize.toast('Success! Tokens added to your account.', 2000);
             setTimeout(() => {
                 window.location.href = 'stepbet://cash-out-complete';
             }, 2000);
+        } else {
+            throw new Error(data.error || 'Cash out failed');
         }
     })
     .catch(error => {
-        Materialize.toast(`Request failed: ${error.message}`, 3000);
+        Materialize.toast(`Error: ${error.message}`, 3000);
 	enableButton(cashOutButton, cashOut);
     });
 };
