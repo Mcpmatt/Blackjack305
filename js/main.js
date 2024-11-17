@@ -27,21 +27,21 @@ $( document ).ready(function() {
   blackjackTokens: urlParams.get('blackjackTokens')
   };
     
-  console.log('Received URL Parameters:', params);
+  Materialize.toast('Received URL Parameters:', params);
     
   // Verify cloud function URL format
   if (params.cloudFunction) {
-        console.log('Cloud Function URL is properly formatted:', 
+        Materialize.toast('Cloud Function URL is properly formatted:', 
             params.cloudFunction.startsWith('https://us-central1-'));
     } else {
-        console.error('Cloud Function URL is missing');
+        Materialize.toast('Cloud Function URL is missing');
     }
     
   // Verify user ID
   if (params.uid) {
-        console.log('User ID is present:', params.uid);
+        Materialize.toast('User ID is present:', params.uid);
     } else {
-        console.error('User ID is missing');
+        Materialize.toast('User ID is missing');
     }
 });
 
