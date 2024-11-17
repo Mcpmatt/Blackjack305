@@ -98,6 +98,12 @@ var cashOut = function() {
     const cloudFunctionUrl = urlParams.get('cloudFunction');
     const userId = urlParams.get('uid');
     const finalBalance = currentChipBalance;
+
+    console.log('Attempting cash out with:', {
+        cloudFunctionUrl,
+        userId,
+        finalBalance
+    });
     
     // Disable button during processing to prevent double-clicks
     disableButton(cashOutButton);
