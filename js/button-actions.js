@@ -99,52 +99,81 @@ var cashOut = function() {
     const userId = urlParams.get('uid');
     const finalBalance = currentChipBalance;
 
-    console.log('Attempting cash out with:', {
-        cloudFunctionUrl,
-        userId,
-        finalBalance
-    });
-    
     // Disable button during processing to prevent double-clicks
     disableButton(cashOutButton);
     
-    // Show loading indicator using Materialize toast
-    Materialize.toast('Processing cash out...', 2000);
+    // Step 1: Verify parameters
+    Materialize.toast('Step 1: Checking parameters...', 2000);
+    setTimeout(() => {
+        Materialize.toast(`Cloud Function URL: ${cloudFunctionUrl?.substring(0, 30)}...`, 3000);
+        Materialize.toast(`User ID: ${userId}`, 3000);
+        Materialize.toast(`Balance to cash out: ${finalBalance}`, 3000);
+    }, 2000);
     
+    // Validation
+    if (!cloudFunctionUrl || !userId || finalBalance === undefined) {
+        Materialize.toast('Error: Missing required parameters', 3000);
+        return;
+    }
+    
+    // Step 2: Prepare request
+    const requestData = {
+        uid: userId,
+        finalBalance: finalBalance
+    };
+    
+    setTimeout(() => {
+        Materialize.toast('Step 2: Sending request...', 2000);
+        Materialize.toast(`Request data: ${JSON.stringify(requestData)}`, 3000);
+    }, 5000);
+    
+    // Step 3: Make request
     fetch(cloudFunctionUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Accept': 'application/json'
         },
-        body: JSON.stringify({
-            uid: userId,
-            finalBalance: finalBalance
-        })
+        body: JSON.stringify(requestData)
     })
     .then(response => {
+        Materialize.toast(`Step 3: Response received (${response.status})`, 2000);
+        
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.json();
     })
     .then(data => {
+        Materialize.toast('Step 4: Processing response...', 2000);
+        Materialize.toast(`Response data: ${JSON.stringify(data)}`, 3000);
+        
         if (data.success) {
-            // Show success message
-            Materialize.toast('Successfully cashed out!', 1500);
+            // Step 5: Success handling
+            Materialize.toast('Success! Processing cashout...', 2000);
             
-            // Add slight delay for toast to be visible before redirect
-            setTimeout(function() {
-                // Return to FlutterFlow app
-                window.location.href = 'stepbet://cash-out-complete';
-            }, 1500);
+            // Disable the button to prevent double-clicks
+            disableButton(cashOutButton);
+            
+            setTimeout(() => {
+                Materialize.toast('Successfully cashed out!', 1500);
+                
+                // Step 6: Return to app
+                setTimeout(() => {
+                    Materialize.toast('Returning to app...', 1500);
+                    window.location.href = 'stepbet://cash-out-complete';
+                }, 1500);
+            }, 2000);
         } else {
-            throw new Error('Cash out failed');
+            throw new Error(data.error || 'Cash out failed');
         }
     })
     .catch(error => {
+        // Error handling
+        Materialize.toast(`Error occurred: ${error.message}`, 4000);
         console.error('Cash out error:', error);
-        Materialize.toast('Error processing cash out. Please try again.', 3000);
-        // Re-enable button on error
+        
+        // Re-enable the button on error
         enableButton(cashOutButton, cashOut);
     });
 };
