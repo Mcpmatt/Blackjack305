@@ -114,7 +114,8 @@ var cashOut = function() {
         },
         body: JSON.stringify({
             uid: userId,
-            finalBalance: finalBalance
+            finalBalance: finalBalance,
+	    has_cashed_out: true //Update Firebase Conditional
         })
     })
     .then(response => {
