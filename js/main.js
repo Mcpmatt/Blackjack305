@@ -100,6 +100,7 @@ function updateVisibleHandTotals() {
 // Called when player clicks on a chip
 function selectWager(amount){
 	currentWager += amount;
+	currentChipBalance -= amount;
 	updateVisibleChipBalances();
 }
 
