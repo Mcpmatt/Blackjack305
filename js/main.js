@@ -19,31 +19,6 @@ $( document ).ready(function() {
     } else {
         disableButton(cashOutButton);
     }
-
-  // Debug logging
-  const params = {
-  cloudFunction: urlParams.get('cloudFunction'),
-  uid: urlParams.get('uid'),
-  blackjackTokens: urlParams.get('blackjackTokens')
-  };
-    
-  Materialize.toast('Received URL Parameters:', params);
-    
-  // Verify cloud function URL format
-  if (params.cloudFunction) {
-        Materialize.toast('Cloud Function URL is properly formatted:', 3000);
-	Materialize.toast(params.cloudFunction);
-    } else {
-        Materialize.toast('Cloud Function URL is missing');
-    }
-    
-  // Verify user ID
-  if (params.uid) {
-        Materialize.toast('User ID is present:', 3000);
-	Materialize.toast(params.uid);
-    } else {
-        Materialize.toast('User ID is missing');
-    }
 });
 
 var currentTurn = "player";
