@@ -19,6 +19,30 @@ $( document ).ready(function() {
     } else {
         disableButton(cashOutButton);
     }
+
+  // Debug logging
+  const params = {
+  cloudFunction: urlParams.get('cloudFunction'),
+  uid: urlParams.get('uid'),
+  blackjackTokens: urlParams.get('blackjackTokens')
+  };
+    
+  console.log('Received URL Parameters:', params);
+    
+  // Verify cloud function URL format
+  if (params.cloudFunction) {
+        console.log('Cloud Function URL is properly formatted:', 
+            params.cloudFunction.startsWith('https://us-central1-'));
+    } else {
+        console.error('Cloud Function URL is missing');
+    }
+    
+  // Verify user ID
+  if (params.uid) {
+        console.log('User ID is present:', params.uid);
+    } else {
+        console.error('User ID is missing');
+    }
 });
 
 var currentTurn = "player";
