@@ -121,7 +121,6 @@ var cashOut = function() {
         if (!response.ok) {
             return response.text().then(text => {
                 Materialize.toast(`Server error: ${text}`, 3000);
-		currentChipBalance = 0; //Reset Chip Balance upon successful Cash Out
                 throw new Error(text);
             });
         }
@@ -130,6 +129,8 @@ var cashOut = function() {
     .then(data => {
         if (data.success) {
             Materialize.toast('Success! Tokens added to your account.', 2000);
+	    currentChipBalance = 0; //Reset Chip Balance upon successful Cash Out
+	    updateVisibleChipBalances();
             setTimeout(() => {
                 window.location.href = 'fitness305casino://cash-out-complete';
             }, 2000);
