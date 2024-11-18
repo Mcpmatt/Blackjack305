@@ -12,8 +12,8 @@ var startGame = function() {
 	} else if (currentChipBalance < currentWager) {
 		Materialize.toast("Insufficient chip balance, please select a lower bet" , 1500);
 	} else {
-		//currentChipBalance -= currentWager; Done in betting phase
-		//updateVisibleChipBalances();
+		currentChipBalance -= currentWager; 
+		updateVisibleChipBalances();
 		$("#welcome").hide();
 		$("#game-over").hide();
 		$(".brand-logo").text("blackjack"); 
