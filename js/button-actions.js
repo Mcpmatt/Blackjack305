@@ -119,8 +119,8 @@ var cashOut = function() {
             uid: userId,
             finalBalance: finalBalance,
 	    has_cashed_out: true, //Update Firebase Conditional
-	    bets_placed: betsPlaced,
-            total_bet_amount: totalBetAmount
+	    betsPlaced: betsPlaced,
+            totalBetAmount: totalBetAmount
         })
     })
     .then(response => {
