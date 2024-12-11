@@ -118,7 +118,9 @@ var cashOut = function() {
         body: JSON.stringify({
             uid: userId,
             finalBalance: finalBalance,
-	    has_cashed_out: true //Update Firebase Conditional
+	    has_cashed_out: true, //Update Firebase Conditional
+	    bets_placed: betsPlaced,
+            total_bet_amount: totalBetAmount
         })
     })
     .then(response => {
@@ -134,6 +136,9 @@ var cashOut = function() {
         if (data.success) {
             Materialize.toast('Success! Tokens added to your account.', 2000);
 	    currentChipBalance = 0; //Reset Chip Balance upon successful Cash Out
+	    // Reset tracking variables
+            betsPlaced = 0;
+            totalBetAmount = 0;
 	    updateVisibleChipBalances();
             setTimeout(() => {
                 window.location.href = 'fitness305casino://cash-out-complete';
