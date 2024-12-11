@@ -12,6 +12,9 @@ var startGame = function() {
 	} else if (currentChipBalance < currentWager) {
 		Materialize.toast("Insufficient chip balance, please select a lower bet" , 1500);
 	} else {
+		// Track the bet being placed
+	        betsPlaced++;
+	        totalBetAmount += currentWager;
 		currentChipBalance -= currentWager; 
 		updateVisibleChipBalances();
 		$("#welcome").hide();
